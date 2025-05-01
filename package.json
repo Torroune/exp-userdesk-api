@@ -1,0 +1,17 @@
+{
+  "name": "exp-userdesk-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "start": "node --watch --env-file=.env server.js"
+  },
+  "keywords": [],
+  "author": "Henry Amponsah",
+  "license": "MIT",
+  "type": "module",
+  "dependencies": {
+    "express": "^5.1.0",
+    "express-async-handler": "^1.2.0"
+  }
+}
