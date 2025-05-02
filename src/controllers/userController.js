@@ -1,8 +1,11 @@
 import bcrypt from 'bcryptjs';
 import asyncHandler from 'express-async-handler';
-import jwt from 'jsonwebtoken';
 import User from '../models/userModel.js';
+import generateToken from '../utils/generateToken.js';
 
+// @desc    Get all Users
+// @route   POST /api/users
+// @access  Private
 const getUsers = asyncHandler(async (req, res) => {
   const users = await User.find().select('-password');
 
@@ -11,9 +14,24 @@ const getUsers = asyncHandler(async (req, res) => {
 
 // @desc    Get a User
 // @route   POST /api/users
-// @access  public
+// @access  Private
 const getUser = asyncHandler(async (req, res) => {
   const { id } = req.params;
+
+  const user = await User.findById(id).select('-password');
+
+  if (!user) {
+    return res.status(404).json({ error: 'User not found' });
+  }
+
+  res.status(200).json({ success: true, data: user });
+});
+
+// @desc    Get Current User
+// @route   GET /api/users/me
+// @access  Private
+const getMe = asyncHandler(async (req, res) => {
+  const { id } = req.user;
 
   const user = await User.findById(id).select('-password');
 
@@ -61,7 +79,7 @@ const createUser = asyncHandler(async (req, res) => {
   });
 });
 
-// @desc    Login User
+// @desc    Login a User
 // @route   POST /api/users/login
 // @access  public
 const loginUser = asyncHandler(async (req, res) => {
@@ -86,11 +104,15 @@ const loginUser = asyncHandler(async (req, res) => {
     return res.status(400).json({ error: 'Invalid credentials' });
   }
 
+  // Generate
+  const token = generateToken(existingUser._id);
+
   const { password: _, ...userData } = existingUser.toObject();
 
   res.status(200).json({
     success: true,
     message: 'User successfully logged in',
+    token,
     data: userData,
   });
 });
@@ -154,4 +176,12 @@ const deleteUser = asyncHandler(async (req, res) => {
   res.status(200).json({ success: true, message: 'User successfully deleted' });
 });
 
-export { getUsers, getUser, createUser, loginUser, updateUser, deleteUser };
+export {
+  getUsers,
+  getUser,
+  getMe,
+  createUser,
+  loginUser,
+  updateUser,
+  deleteUser,
+};
