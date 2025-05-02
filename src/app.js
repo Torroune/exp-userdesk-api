@@ -1,6 +1,10 @@
 import express from 'express';
 import userRoutes from './routes/userRoutes.js';
 import errorHandler from './middlewares/errorMiddleware.js';
+import connectDB from './config/db.js';
+
+// Connect database
+connectDB();
 
 const app = express();
 
