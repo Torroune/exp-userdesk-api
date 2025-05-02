@@ -79,5 +79,4 @@ You can test the API using [Postman](https://www.postman.com/) or [Insomnia](htt
 
 ## 📝 License
 
-This project is licensed under the MIT License.  
-Feel free to use, share, and improve it!
+This project is licensed under the MIT License - see the [LICENSE](./LICENSE) file for details.
