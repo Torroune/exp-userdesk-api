@@ -32,7 +32,7 @@ Make sure you have the following installed:
 ### Installation
 
 ```bash
-git clone https://github.com/yourusername/userdesk.git
+git clone https://github.com/Torroune/exp-userdesk-api.git
 cd userdesk
 npm install
 ```
