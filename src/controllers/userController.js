@@ -83,15 +83,13 @@ const createUser = asyncHandler(async (req, res) => {
 // @route   POST /api/users/login
 // @access  public
 const loginUser = asyncHandler(async (req, res) => {
-  const { username, password } = req.body;
+  const { email, password } = req.body;
 
-  if (!username || !password) {
-    return res
-      .status(400)
-      .json({ error: 'Username and password are required' });
+  if (!email || !password) {
+    return res.status(400).json({ error: 'Email and password are required' });
   }
 
-  const existingUser = await User.findOne({ username });
+  const existingUser = await User.findOne({ email });
 
   if (!existingUser) {
     return res.status(404).json({ error: 'User not found' });

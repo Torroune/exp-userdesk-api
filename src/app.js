@@ -1,4 +1,5 @@
 import express from 'express';
+import cors from 'cors';
 import userRoutes from './routes/userRoutes.js';
 import errorHandler from './middlewares/errorMiddleware.js';
 import connectDB from './config/db.js';
@@ -7,6 +8,9 @@ import connectDB from './config/db.js';
 connectDB();
 
 const app = express();
+
+// External middlewares
+app.use(cors());
 
 // Express middlewares
 app.use(express.json());
